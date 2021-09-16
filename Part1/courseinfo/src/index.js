@@ -1,58 +1,25 @@
-import React from 'react'
 import ReactDOM from 'react-dom'
 import { useState } from 'react';
+import './styles.css'
 
-const rootElemnet = document.getElementById('root');
-
-const Counter = ({contador}) => {
-  return <h1>{contador}</h1>
-}
-
-const App = (props) => {
-  const [contadorValue, updateContador] = useState(0)
-
-  //const contador = useState(0) 
-  //const contadorValue = contador[0]
-  //const contadorUpdate = contador [1]
-
-console.log("render")
-
-const handleclick = () => {
-  updateContador(contadorValue + 1);
-  console.log("click");
-}
-
-const handleClickReset = () => {
-  updateContador (0);
-}
-const isEven = contadorValue %2 === 0
-
-const mensajePar = isEven ? "Es par" : "Es impar"
-
-  return (
-      <div>  
-        <p>El valor del conatdor es: </p>
-        <Counter contador={contadorValue}/>
-        <p>{mensajePar}</p>
-        <button 
-          onClick={handleclick}
-            //updateContador(prevContador => {
-            //  return prevContador + 1
-            //})  
-        >
-          Incrementar
+const App = () => {
+    const [left, setLeft] = useState(0)
+    const [right, setRight] = useState(0)
+  
+    return (
+      <div>
+        {left}
+        <button onClick={() => setLeft(left + 1)}>
+          left
         </button>
-        <button 
-          onClick={handleClickReset}
-            //updateContador(prevContador => {
-            //  return prevContador + 1
-            //})  
-        >
-          Reset
+        <button onClick={() => setRight(right + 1)}>
+          right
         </button>
+        {right}
       </div>
     )
-}
+  }
 
+const rootElemnet = document.getElementById("root")
 ReactDOM.render(<App />, rootElemnet)
 
