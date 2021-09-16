@@ -20,7 +20,10 @@ console.log("render")
         <button 
           onClick={() => {
             console.log("click");
-            updateContador(contadorValue + 1);
+            //updateContador(contadorValue + 1);
+            updateContador(prevContador => {
+              return prevContador + 1
+            })  
           }}
         >
           Incrementar
