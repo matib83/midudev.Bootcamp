@@ -5,35 +5,45 @@ import './styles.css'
 const App = () => {
   //const [left, setLeft] = useState(0)
   //const [right, setRight] = useState(0)
-  const [clics, setClics] = useState({
+  const [counters, setCounters] = useState({
     left: 0,
-    right: 0
+    right: 0,
+    clicks: 0,
+    mensaje: 'Mensaje en el estado'
   })
 
+  const [clicks, setClicks] = useState([]) 
+
   const handleClickLeft = () => {
-    setClics({
-      left: clics.left +1,
-      right: clics.right
+    setCounters({
+      ...counters, 
+      left: counters.left +1,
+      clicks: counters.clicks + 1
     })
+    setClicks(prevClicks => ([...prevClicks, 'L']))
   }
 
   const handleClickRight = () => {
-    setClics({
-      left: clics.left,
-      right: clics.right + 1
+    setCounters({
+      ...counters, 
+      right: counters.right + 1,
+      clicks: counters.clicks + 1
     })
+    setClicks(prevClicks => ([...prevClicks, 'R']))
   }
 
   return (
     <div>
-      {clics.left}
+      {counters.left}
       <button onClick={handleClickLeft}>
         left
       </button>
       <button onClick={handleClickRight}>
         right
       </button>
-      {clics.right}
+      {counters.right}
+      <p>Click totales: {counters.clicks}</p>
+      {clicks.join(", ")}
     </div>
   )
 }
