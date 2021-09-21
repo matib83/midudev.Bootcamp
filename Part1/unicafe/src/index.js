@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom'
 import './styles.css'
 
 const Average = ({good, neutral, bad}) => {
-  return (good || neutral || bad) ? (good-bad)/(good+neutral+bad) : 0
+  return (good-bad)/(good+neutral+bad)
 }
 
 const Positivos = ({good, neutral, bad}) => {
-  return (good || neutral || bad) ? ((good)/(good+neutral+bad)*100) : 0
+  return ((good)/(good+neutral+bad)*100)
 }
+
+const SinFeedback = () => <p>Aun no hay feedback para mostrar</p> 
 
 const App = () => {
   // save clicks of each button to its own state
@@ -53,13 +55,20 @@ const App = () => {
       <p>good: {good}</p>
       <p>neutral: {neutral}</p>
       <p>bad: {bad}</p>
-      <p>Comentarios totales: {good+neutral+bad}</p>
-      <p>Promedio: <Average good={good} neutral={neutral} bad={bad} /></p>
-      <p>Positivos: <Positivos good={good} neutral={neutral} bad={bad} /> %</p>
+      {(good || neutral || bad) ? 
+        <>
+          <p>Comentarios totales: {good+neutral+bad}</p>
+          <p>Promedio: <Average good={good} neutral={neutral} bad={bad} /> </p>
+          <p>Positivos: <Positivos good={good} neutral={neutral} bad={bad} /> %</p>
+        </>
+        :
+        <SinFeedback/>
+      }
+
     </div>
   )
 }
 
 ReactDOM.render(<App />, 
-  document.getElementById('root')
+document.getElementById('root')
 )
