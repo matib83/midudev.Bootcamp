@@ -26,20 +26,11 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
-  const handleClickGood = () => {
-    setGood(good+1)
-    console.log(good)
-  }
+  const handleClickGood = () => setGood(good+1)
 
-  const handleClickNeutral = () => {
-    setNeutral(neutral+1)
-    console.log(neutral)
-  }
+  const handleClickNeutral = () => setNeutral(neutral+1)
 
-  const handleClickBad = () => {
-    setBad(bad+1)
-    console.log(bad)
-  }
+  const handleClickBad = () => setBad(bad+1)
 
   return (
     <div>
