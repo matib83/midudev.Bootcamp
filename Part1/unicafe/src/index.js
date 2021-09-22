@@ -2,13 +2,10 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import './styles.css'
 
-const Button = ({handleClickGood, text}) => {
-  return (
-    <button onClick={handleClickGood}>
-      {text}  
-    </button>
-  )
-}
+const Button = ({handleClickGood, text}) => 
+  <button onClick={handleClickGood}>
+    {text}  
+  </button>
 
 const Statics = ({text, value}) => <p>{text}: {value}</p>
 
