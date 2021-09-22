@@ -7,10 +7,21 @@ const Button = ({handleClickGood, text}) =>
     {text}  
   </button>
 
-const Statics = ({text, value}) => <p>{text}: {value}</p>
+const Statics = ({text, value}) => {
+  return (
+    <table>
+        <tbody>
+          <tr>
+            <td>{text}:</td>
+            <td>{value}</td>
+          </tr>
+        </tbody> 
+      </table>
+  )
+}
 
 const Total = ({good, neutral, bad}) => 
-  <p>Comentarios totales: {good+neutral+bad} </p>
+  <p>Comentarios: {good+neutral+bad} </p>
 
 const Average = ({good, neutral, bad}) =>
   <p>Promedio: {((good-bad)/(good+neutral+bad)).toFixed(2)} </p>
@@ -39,6 +50,7 @@ const App = () => {
       <Button handleClickGood={handleClickNeutral} text="NEUTRAL"/>
       <Button handleClickGood={handleClickBad} text="BAD"/>
       <h1>Estadísticas</h1>
+      
       <Statics text="good" value={good} />
       <Statics text="neutral" value={neutral} />
       <Statics text="bad" value={bad} />
@@ -52,6 +64,18 @@ const App = () => {
         :
         <SinFeedback/>
       }
+      <table>
+        <tbody>
+          <tr>
+            <td>Dato1: </td>
+            <td>VALOR_1</td>
+          </tr>
+          <tr>
+            <td>Dato2: </td>
+            <td>VALOR_2</td>
+          </tr>
+        </tbody>
+      </table>
 
     </div>
   )
