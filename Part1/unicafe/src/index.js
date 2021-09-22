@@ -2,13 +2,24 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import './styles.css'
 
-const Average = ({good, neutral, bad}) => {
-  return <p>Promedio: {(good-bad)/(good+neutral+bad)} </p>
+const Button = ({handleClickGood, text}) => {
+  return (
+    <button onClick={handleClickGood}>
+      {text}  
+    </button>
+  )
 }
 
-const Positivos = ({good, neutral, bad}) => {
-  return <p>Positivos: {(good)/(good+neutral+bad)*100} %</p>
-}
+const Statics = ({text, value}) => <p>{text}: {value}</p>
+
+const Total = ({good, neutral, bad}) => 
+  <p>Comentarios totales: {good+neutral+bad} </p>
+
+const Average = ({good, neutral, bad}) =>
+  <p>Promedio: {((good-bad)/(good+neutral+bad)).toFixed(2)} </p>
+
+const Positivos = ({good, neutral, bad}) => 
+  <p>Positivos: {((good)/(good+neutral+bad)*100).toFixed(2)} %</p>
 
 const SinFeedback = () => <p>Aun no hay feedback para mostrar</p> 
 
@@ -36,28 +47,17 @@ const App = () => {
   return (
     <div>
       <h1>Give feedback</h1>
-      <button 
-        onClick={handleClickGood}
-      >
-        GOOD  
-      </button>
-      <button 
-        onClick={handleClickNeutral}
-      >
-        NEUTRAL  
-      </button>
-      <button 
-        onClick={handleClickBad}
-      >
-        BAD  
-      </button>
-      <h1>Statics</h1>
-      <p>good: {good}</p>
-      <p>neutral: {neutral}</p>
-      <p>bad: {bad}</p>
+      <Button handleClickGood={handleClickGood} text="GOOD"/>
+      <Button handleClickGood={handleClickNeutral} text="NEUTRAL"/>
+      <Button handleClickGood={handleClickBad} text="BAD"/>
+      <h1>Estadísticas</h1>
+      <Statics text="good" value={good} />
+      <Statics text="neutral" value={neutral} />
+      <Statics text="bad" value={bad} />
+      <br></br>
       {(good || neutral || bad) ? 
         <>
-          <p>Comentarios totales: {good+neutral+bad}</p>
+          <Total good={good} neutral={neutral} bad={bad} />
           <Average good={good} neutral={neutral} bad={bad} />
           <Positivos good={good} neutral={neutral} bad={bad} />
         </>
