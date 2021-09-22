@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom'
 import './styles.css'
 
 const Average = ({good, neutral, bad}) => {
-  return (good-bad)/(good+neutral+bad)
+  return <p>Promedio: {(good-bad)/(good+neutral+bad)} </p>
 }
 
 const Positivos = ({good, neutral, bad}) => {
-  return ((good)/(good+neutral+bad)*100)
+  return <p>Positivos: {(good)/(good+neutral+bad)*100} %</p>
 }
 
 const SinFeedback = () => <p>Aun no hay feedback para mostrar</p> 
@@ -58,8 +58,8 @@ const App = () => {
       {(good || neutral || bad) ? 
         <>
           <p>Comentarios totales: {good+neutral+bad}</p>
-          <p>Promedio: <Average good={good} neutral={neutral} bad={bad} /> </p>
-          <p>Positivos: <Positivos good={good} neutral={neutral} bad={bad} /> %</p>
+          <Average good={good} neutral={neutral} bad={bad} />
+          <Positivos good={good} neutral={neutral} bad={bad} />
         </>
         :
         <SinFeedback/>
