@@ -9,25 +9,39 @@ const Button = ({handleClickGood, text}) =>
 
 const Statics = ({text, value}) => {
   return (
-    <table>
-        <tbody>
-          <tr>
-            <td>{text}:</td>
-            <td>{value}</td>
-          </tr>
-        </tbody> 
-      </table>
+    <tr>
+      <td>{text}:</td>
+      <td>{value}</td>
+    </tr>
   )
 }
 
-const Total = ({good, neutral, bad}) => 
-  <p>Comentarios: {good+neutral+bad} </p>
+const Total = ({good, neutral, bad}) => {
+  return (
+    <tr>
+      <td>Comentarios:</td>
+      <td>{good+neutral+bad}</td>
+    </tr>
+  )
+}
 
-const Average = ({good, neutral, bad}) =>
-  <p>Promedio: {((good-bad)/(good+neutral+bad)).toFixed(2)} </p>
+const Average = ({good, neutral, bad}) => {
+  return (
+    <tr>
+      <td>Promedio:</td>
+      <td>{((good-bad)/(good+neutral+bad)).toFixed(2)}</td>
+    </tr>
+  )
+}
 
-const Positivos = ({good, neutral, bad}) => 
-  <p>Positivos: {((good)/(good+neutral+bad)*100).toFixed(2)} %</p>
+const Positivos = ({good, neutral, bad}) => {
+  return (
+    <tr>
+      <td>Positivos:</td>
+      <td>{((good)/(good+neutral+bad)*100).toFixed(2)} %</td>
+    </tr>
+  )
+}
 
 const SinFeedback = () => <p>Aun no hay feedback para mostrar</p> 
 
@@ -50,33 +64,25 @@ const App = () => {
       <Button handleClickGood={handleClickNeutral} text="NEUTRAL"/>
       <Button handleClickGood={handleClickBad} text="BAD"/>
       <h1>Estadísticas</h1>
-      
-      <Statics text="good" value={good} />
-      <Statics text="neutral" value={neutral} />
-      <Statics text="bad" value={bad} />
+      <table>
+        <tbody>
+          <Statics text="good" value={good} />
+          <Statics text="neutral" value={neutral} />
+          <Statics text="bad" value={bad} />
+        </tbody> 
+      </table>
       <br></br>
       {(good || neutral || bad) ? 
-        <>
-          <Total good={good} neutral={neutral} bad={bad} />
-          <Average good={good} neutral={neutral} bad={bad} />
-          <Positivos good={good} neutral={neutral} bad={bad} />
-        </>
+        <table>
+          <tbody>
+            <Total good={good} neutral={neutral} bad={bad} />
+            <Average good={good} neutral={neutral} bad={bad} />
+            <Positivos good={good} neutral={neutral} bad={bad} />
+          </tbody>
+        </table>
         :
         <SinFeedback/>
       }
-      <table>
-        <tbody>
-          <tr>
-            <td>Dato1: </td>
-            <td>VALOR_1</td>
-          </tr>
-          <tr>
-            <td>Dato2: </td>
-            <td>VALOR_2</td>
-          </tr>
-        </tbody>
-      </table>
-
     </div>
   )
 }
