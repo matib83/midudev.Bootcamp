@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Button = ({handleClickSelected, text}) => 
+const Button = ({handleClick, text}) => 
   <p>
-    <button onClick={handleClickSelected}>
+    <button onClick={handleClick}>
       {text}  
     </button>
   </p>
@@ -11,13 +11,22 @@ const Button = ({handleClickSelected, text}) =>
 const App = (props) => {
   const maximo = 5, minimo = 0
   const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState(Array(maximo+1).fill(0)) //Asigno un estado como matriz
+  
+  const handleClickVote = () => {
+    const copyPints = [...points]
+    copyPints[selected] +=1
+    setPoints(copyPints)
+  }
+
   const handleClickSelected = () => setSelected(Math.round(Math.random() * ((maximo - minimo) + minimo)))
   console.log(selected)
 
   return (
     <div>
       {props.anecdotes[selected]}
-      <Button handleClickSelected={handleClickSelected} text="Proxima anécdota"/>
+      <Button handleClick={handleClickVote} text="Votar"/>
+      <Button handleClick={handleClickSelected} text="Proxima anécdota"/>
     </div>
   )
 }
