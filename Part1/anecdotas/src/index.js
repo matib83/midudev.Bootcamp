@@ -8,32 +8,32 @@ const Button = ({handleClick, text}) =>
     </button>
   </p>
 
-const MasVotada = ({points, anecdotes}) => {
-  const winningScore = Math.max(...points)
+const MasVotada = ({anecdotes}) => {
+  const winningScore = Math.max(...anecdotes.puntaje)
   let winningIndex = undefined;
-  
-  points.forEach((point, index) => {
-    if(point===winningScore){
+
+  anecdotes.forEach((anecdote, index) => {
+    if(anecdotes.puntaje===winningScore){
       if(!winningIndex) winningIndex = index;
     }
   })
 
   console.log({winningIndex})
 
-  console.log("Anecdota ganadra: ", winningIndex)
+  console.log("Anecdota ganadra: ", anecdotes[winningIndex].anecdota)
   return ( 
-  <p>{anecdotes[winningIndex]}</p>
+  <p>{anecdotes[winningIndex].anecdota}</p>
   )
 }
 
 const App = (props) => {
   const maximo = 5, minimo = 0
   const [selected, setSelected] = useState(0)
-  const [points, setPoints] = useState(Array(maximo+1).fill(0)) //Asigno un estado como matriz
+  const [points, setPoints] = useState(anecdotes) //Asigno un estado como matriz
   
   const handleClickVote = () => {
     const copyPints = [...points]
-    copyPints[selected] +=1
+    copyPints[selected].puntaje +=1
     setPoints(copyPints)
     console.log("Puntajes:", copyPints)
   }
@@ -43,29 +43,22 @@ const App = (props) => {
 
   return (
     <div>
-      {props.anecdotes[selected]}
+      {anecdotes[selected].anecdota}
       <Button handleClick={handleClickVote} text="Votar"/>
       <Button handleClick={handleClickSelected} text="Proxima anécdota"/>
       <h1>Anecdota con mayoría de votos</h1>
-      <MasVotada points={points} anecdotes={anecdotes}/>
+      <MasVotada anecdotes={anecdotes}/>
     </div>
   )
 }
 
-const data = [
-  {anecdota: 'hola', puntaje:0},
-  {anecdota: 'hola1', puntaje:0},
-  {anecdota: 'hola2', puntaje:0},
-  {anecdota: 'hola3', puntaje:0},
-]
-
 const anecdotes = [
-  'If it hurts, do it more often',
-  'Adding manpower to a late software project makes it later!',
-  'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
-  'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
-  'Premature optimization is the root of all evil.',
-  'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
+  {anecdota: 'If it hurts, do it more often', puntaje:0},
+  {anecdota: 'Adding manpower to a late software project makes it later!', puntaje:0},
+  {anecdota: 'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.', puntaje:0 },
+  {anecdota: 'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.', puntaje:0 },
+  {anecdota: 'Premature optimization is the root of all evil.', puntaje:0 },
+  {anecdota: 'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.', puntaje:0}
 ]
 
 ReactDOM.render(
