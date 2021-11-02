@@ -22,20 +22,20 @@ const notes = [
 ]
 
 export default function App () {
-
+  if (typeof notes === "undefined" || notes.length === 0) {
+    return "No tenemos notas para mostrar"
+  }
   return (
     <div>
       <h1>Notes</h1>
       <ul>
         {
-          notes.map((note) => {
-            return <div><li>
-              <strong>{note.id}</strong>
-              {note.content}
-            </li>
+          notes.map(note => 
+            <div key={note.id}>
+              <p>{note.content}</p>
+              <small><time>{note.date}</time></small>
             </div>
-
-          })
+          )
         }
       </ul>
     </div>
