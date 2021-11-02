@@ -21,18 +21,31 @@ const notes = [
   },
 ]
 
-const App = () => {
+export default function App () {
 
   return (
     <div>
       <h1>Notes</h1>
       <ul>
-        <li>{notes[0].content}</li>
-        <li>{notes[1].content}</li>
-        <li>{notes[2].content}</li>
+        {
+          notes.map((note) => {
+            return <div><li>
+              <strong>{note.id}</strong>
+              {note.content}
+            </li>
+            </div>
+
+          })
+        }
       </ul>
     </div>
   );
 }
 
-export default App;
+/* FORMA NO REAL
+<ul>
+<li>{notes[0].content}</li>
+<li>{notes[1].content}</li>
+<li>{notes[2].content}</li>
+</ul>
+*/
