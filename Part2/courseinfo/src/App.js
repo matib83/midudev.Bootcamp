@@ -23,7 +23,7 @@ const notes = [
 
 const Note = ({ id, content, date }) => {
   return (  
-        <li key={id}>
+        <li>
           <p>{content}</p>
           <small>
             <time>{date}</time>
@@ -40,7 +40,7 @@ export default function App () {
     <div>
       <h1>Notes</h1>
       <ol>
-        {notes.map(note => <Note id={note.id} content={note.content} date={note.date} />)}
+        {notes.map(note => <Note key={note.id} id={note.id} content={note.content} date={note.date} />)}
       </ol>
     </div>
   );
