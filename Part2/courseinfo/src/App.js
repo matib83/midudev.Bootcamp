@@ -13,12 +13,10 @@ export default function App (props) {
   const handleSubmit = (event) => {
     event.preventDefault()
     console.log('crear nota')
-    console.log(newNote )
     const noteToAddToState = {
       id: notes.length + 1,
-      content: newNote,
-      date: new Date().toISOString(),
-      important: Math.random() < 0.5
+      title: newNote,
+      body: newNote
     }
     console.log(noteToAddToState)
 
@@ -31,8 +29,7 @@ export default function App (props) {
     <div> 
       <h1>Notes</h1>
       <ol>
-        {notes
-        .map(note => <Note key={note.id} id={note.id} content={note.content} date={note.date} />)}
+        {notes.map(note => <Note key={note.id} {...note} />)}
       </ol>
       <form onSubmit={handleSubmit}>
         <input type='text' onChange={handleChange} value={newNote}/>
