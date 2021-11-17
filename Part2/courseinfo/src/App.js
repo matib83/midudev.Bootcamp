@@ -1,10 +1,24 @@
 import {Note} from './Note.js'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
-export default function App (props) {
+export default function App () {
 
-  const [notes, setNotes] = useState(props.notes)
-  const [newNote, setNewNote] = useState('')
+  const [notes, setNotes] = useState([])
+  const [newNote, setNewNote] = useState("")
+
+  useEffect(() => {
+    console.log("useEffect")
+    setTimeout(() => { 
+      console.log("Time out finalizado")
+      fetch("https://jsonplaceholder.typicode.com/posts")
+        .then(response => response.json())
+        .then(json => {
+        //console.log(json)
+        console.log("seteando las notas de la API")
+        setNotes(json)
+        })
+    }, 2000)
+  }, [])
 
   const handleChange = (event) => {
     setNewNote(event.target.value)
@@ -24,6 +38,9 @@ export default function App (props) {
     //setNewNote([...notes, noteToAddToState]) Forma dificil pero mas potente
     setNewNote("")
   }
+
+  console.log("Se raliza renderizado")
+  if (notes.lengh === 0) return "Primer renderizado"
 
   return (
     <div> 
