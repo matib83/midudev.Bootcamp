@@ -6,12 +6,12 @@ export default function App (props) {
   const [notes, setNotes] = useState(props.notes)
   //const [newNote, setNewNote] = useState('')
 
-  const handleChange = () => {
-    console.log('change')
+  const handleChange = (event) => {
+    console.log(event.target.value)
   }
 
   return (
-    <div>
+    <div> 
       <h1>Notes</h1>
       <ol>
         {notes.map(note => <Note key={note.id} id={note.id} content={note.content} date={note.date} />)}
