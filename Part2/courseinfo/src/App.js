@@ -4,10 +4,15 @@ import {useState} from 'react'
 export default function App (props) {
 
   const [notes, setNotes] = useState(props.notes)
-  //const [newNote, setNewNote] = useState('')
+  const [newNote, setNewNote] = useState('')
 
   const handleChange = (event) => {
-    console.log(event.target.value)
+    const newNote = event.target.value
+    //console.log(newNote)
+  }
+
+  const handleClick = (event) => {
+    console.log('crear nota')
   }
 
   return (
@@ -18,7 +23,7 @@ export default function App (props) {
       </ol>
       <div>
         <input type='text' onChange={handleChange}/>
-        <button>Creat nota</button>
+        <button onClick={handleClick}>Creat nota</button>
       </div>
     </div> 
   );
