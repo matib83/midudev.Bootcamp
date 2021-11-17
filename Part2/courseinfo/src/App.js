@@ -10,7 +10,8 @@ export default function App (props) {
     setNewNote(event.target.value)
   }
 
-  const handleClick = (event) => {
+  const handleSubmit = (event) => {
+    event.preventDefault()
     console.log('crear nota')
     console.log(newNote )
     const noteToAddToState = {
@@ -32,10 +33,10 @@ export default function App (props) {
       <ol>
         {notes.map(note => <Note key={note.id} id={note.id} content={note.content} date={note.date} />)}
       </ol>
-      <div>
+      <form onSubmit={handleSubmit}>
         <input type='text' onChange={handleChange} value={newNote}/>
-        <button onClick={handleClick}>Creat nota</button>
-      </div>
+        <button>Creat nota</button>
+      </form>
     </div> 
   );
 }
