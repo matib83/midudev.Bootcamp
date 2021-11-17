@@ -5,7 +5,6 @@ export default function App (props) {
 
   const [notes, setNotes] = useState(props.notes)
   const [newNote, setNewNote] = useState('')
-  const [showAll, setShowAll] = useState(true)
 
   const handleChange = (event) => {
     setNewNote(event.target.value)
@@ -28,20 +27,11 @@ export default function App (props) {
     setNewNote("")
   }
 
-  const handleShowAll = () => {
-    setShowAll(() => !showAll)
-  }
-
   return (
     <div> 
       <h1>Notes</h1>
-      <button onClick={handleShowAll}>{showAll ? "Show only important" : "Show all"}</button>
       <ol>
         {notes
-        .filter(note => {
-          if (showAll === true) return true // Si el estado showAll es true muestro TODAS las notas
-          return note.important === true    // Si no, solo muestro als notas IMPORTANTES
-        })
         .map(note => <Note key={note.id} id={note.id} content={note.content} date={note.date} />)}
       </ol>
       <form onSubmit={handleSubmit}>
