@@ -5,9 +5,12 @@ export default function App () {
 
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState("")
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     console.log("useEffect")
+    setLoading(true);
+
     setTimeout(() => { 
       console.log("Time out finalizado")
       fetch("https://jsonplaceholder.typicode.com/posts")
@@ -16,6 +19,7 @@ export default function App () {
         //console.log(json)
         console.log("seteando las notas de la API")
         setNotes(json)
+        setLoading(false)
         })
     }, 2000)
   }, [])
@@ -40,11 +44,12 @@ export default function App () {
   }
 
   console.log("Se raliza renderizado")
-  if (notes.lengh === 0) return "Primer renderizado"
+  //if (notes.length === 0) return "Primer renderizado"
 
   return (
     <div> 
       <h1>Notes</h1>
+      {loading ? "Cargando..." : ""}
       <ol>
         {notes.map(note => <Note key={note.id} {...note} />)}
       </ol>
