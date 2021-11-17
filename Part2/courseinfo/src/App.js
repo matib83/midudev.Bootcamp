@@ -22,7 +22,7 @@ export default function App (props) {
         {notes.map(note => <Note key={note.id} id={note.id} content={note.content} date={note.date} />)}
       </ol>
       <div>
-        <input type='text' onChange={handleChange} />
+        <input type='text' onChange={handleChange} value={newNote}/>
         <button onClick={handleClick}>Creat nota</button>
       </div>
     </div> 
