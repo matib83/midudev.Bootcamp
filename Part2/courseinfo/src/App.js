@@ -13,6 +13,17 @@ export default function App (props) {
   const handleClick = (event) => {
     console.log('crear nota')
     console.log(newNote )
+    const noteToAddToState = {
+      id: notes.length + 1,
+      content: newNote,
+      date: new Date().toISOString(),
+      important: Math.random() < 0.5
+    }
+    console.log(noteToAddToState)
+
+    setNotes(notes.concat(noteToAddToState))  //Forma facil
+    //setNewNote([...notes, noteToAddToState]) Forma dificil pero mas potente
+    setNewNote("")
   }
 
   return (
