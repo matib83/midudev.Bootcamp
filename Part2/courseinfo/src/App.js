@@ -7,12 +7,12 @@ export default function App (props) {
   const [newNote, setNewNote] = useState('')
 
   const handleChange = (event) => {
-    const newNote = event.target.value
-    //console.log(newNote)
+    setNewNote(event.target.value)
   }
 
   const handleClick = (event) => {
     console.log('crear nota')
+    console.log(newNote )
   }
 
   return (
@@ -22,7 +22,7 @@ export default function App (props) {
         {notes.map(note => <Note key={note.id} id={note.id} content={note.content} date={note.date} />)}
       </ol>
       <div>
-        <input type='text' onChange={handleChange}/>
+        <input type='text' onChange={handleChange} />
         <button onClick={handleClick}>Creat nota</button>
       </div>
     </div> 
