@@ -7,14 +7,14 @@ export const Course = ({courses}) => {
     return (
         <div>
             <h1>Web development curriculum</h1>
-            {courses.map(course => {
+            {courses.map(({name,id,parts}) => {
                 return (
-                    <div key={course.id}>
-                        <h2>{course.name}</h2>
+                    <div key={id}>
+                        <h2>{name}</h2>
 
-                        {course.parts.map(part => <p key={part.id}>{part.name} {part.exercises}</p>)}
+                        {parts.map(({id,name,exercises}) => <p key={id}>{name} {exercises}</p>)}
 
-                        <b>Total of {course.parts.map(part => part.exercises).reduce((prev, next) => prev + next )} exercises </b>
+                        <b>Total of {parts.map(part => part.exercises).reduce((prev, next) => prev + next )} exercises </b>
                     </div>
                 )})
             }
