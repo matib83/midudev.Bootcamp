@@ -48,7 +48,7 @@ const App = () => {
 
   return (
     <div>
-      {<Course {...courses} />} 
+      {<Course courses={courses} />} 
     </div>)
 }
 
