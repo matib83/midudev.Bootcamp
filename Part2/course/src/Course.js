@@ -3,7 +3,6 @@ export const Course = ({courses}) => {
     console.log("Renderizando el curso")
     console.log({courses})
     console.log(courses.map(course => course.name))
-    //console.log(courses.parts.map(part => part.name))
 
     return (
         <div>
@@ -22,10 +21,3 @@ export const Course = ({courses}) => {
         </div>
     )
 }
-
-/* 
-{course.parts.map(part => <p>{part.name}</p>)}
-            
-            {courses.parts.map(part => <p key={part.id}> {part.name} {part.exercises} </p> )}
-            <b>Total of {courses.parts.map(part => part.exercises).reduce((prev, next) => prev + next )} exercises </b>
-*/
