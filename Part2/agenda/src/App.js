@@ -18,10 +18,10 @@ const App = () => {
     console.log(persons)
     console.log(newName)
 
-    const retornoMap = persons.map(person => person.name.includes(newName))
-    console.log(retornoMap);
-    if (retornoMap.includes(true))
+    if (persons.find(element => element.name === newName)!==undefined)
+    {
       console.log(`${newName} is already added to phonebook`)
+    }
     else
     {
       console.log("Persona no hallada en la agenda");  
