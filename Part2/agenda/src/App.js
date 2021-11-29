@@ -1,25 +1,55 @@
-import logo from './logo.svg';
+import {Person} from './Person.js'
+import React, { useState } from 'react'
 import './App.css';
 
-function App() {
+const App = () => {
+  const [ persons, setPersons ] = useState([
+    { name: 'Arto Hellas' }
+  ]) 
+  const [ newName, setNewName ] = useState('')
+
+  const handleChange = (event) => {
+    setNewName (event.target.value)
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    console.log("Aca debo revisar si hay que agregar a la persona")
+    console.log(persons)
+    console.log(newName)
+
+    const retornoMap = persons.map(person => person.name.includes(newName))
+    console.log(retornoMap);
+    if (retornoMap.includes(true))
+      console.log(`${newName} is already added to phonebook`)
+    else
+    {
+      console.log("Persona no hallada en la agenda");  
+      console.log('Agendar persona')
+      const personToAddState = {
+        name: newName
+      }
+      console.log(personToAddState)
+      setPersons(persons.concat(personToAddState))
+      setNewName ("")
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h2>Phonebook</h2>
+      <form onSubmit={handleSubmit}> 
+        <div>
+          name: <input type="text" onChange={handleChange} value={newName}/>
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+      <h2>Numbers</h2>
+      {persons.map(person => <Person key={person.name} {...person} />)}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
