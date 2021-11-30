@@ -54,10 +54,17 @@ const App = () => {
     }
   }
 
-  const lowercasedFilter = newFilter.toLowerCase();
-  const filteredData = persons.filter(item => {
-      return Object.keys(item).some(key => item[key].toLowerCase().includes(lowercasedFilter));
-    })
+  const lowercasedFilter = newFilter.toLowerCase()
+  const filteredData = persons.filter(person => {               // Primero hago un filtro para definir q personas pasan
+                                        return (
+                                          Object.keys(person)   // segundo, busco cada campo de person (name, number)
+                                                .some(key => {  // Tercero, verifico si alguno de los campos se valida
+                                                  return (
+                                                    person[key].toLowerCase().includes(lowercasedFilter) //se valida si contienen algo de lowercasedFilter
+                                                  )}
+                                                )
+                                        ) 
+                                      })
 
   return (
     <div>
