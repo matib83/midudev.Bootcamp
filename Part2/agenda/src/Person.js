@@ -1,7 +1,7 @@
-export const Person = ({name}) => {
+export const Person = ({name , number}) => {
     return (
         <div>
-            {name}
+            {name} {number}
             <br/>
         </div>
     )
