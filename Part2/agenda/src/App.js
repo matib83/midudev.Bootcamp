@@ -1,4 +1,6 @@
-import {Person} from './Person.js'
+import {Persons} from './Persons.js'
+import {Filter} from './Filter.js'
+import {PersonForm} from './PersonForm.js'
 import React, { useState } from 'react'
 import './App.css';
 
@@ -54,23 +56,24 @@ const App = () => {
 
   const lowercasedFilter = newFilter.toLowerCase();
   const filteredData = persons.filter(item => {
-    return Object.keys(item).some(key => item[key].toLowerCase().includes(lowercasedFilter));
-  })
+      return Object.keys(item).some(key => item[key].toLowerCase().includes(lowercasedFilter));
+    })
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <div> Buscar: <input type="text" onChange={handleChangeFilter} value={newFilter}/> </div>
+      <Filter handleChangeFilter={handleChangeFilter} newFilter={newFilter}/>
       <h3>Add a new</h3>
-      <form onSubmit={handleSubmit}> 
-        <div> name: <input type="text" onChange={handleChangeName} value={newName}/> </div>
-        <div> number: <input type="text" onChange={handleChangeNumber} value={newNumber}/> </div>
-        <div> <button type="submit">add</button> </div>
-      </form>
+      <PersonForm handleSubmit={handleSubmit} handleChangeName={handleChangeName} 
+                  handleChangeNumber={handleChangeNumber} newName={newName} newNumber={newNumber} 
+      /> 
       <h3>Numbers</h3>
-      {filteredData.map(person => <Person key={person.name} {...person} />)}
+      <Persons filteredData={filteredData}/>
     </div>
   )
 }
 
 export default App
+
+//Metodo que utilizaba para mostrar la agenda filtrada
+//{filteredData.map(person => <Persons key={person.name} {...person} />)}
