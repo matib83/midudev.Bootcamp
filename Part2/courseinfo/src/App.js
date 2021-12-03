@@ -1,5 +1,6 @@
 import {Note} from './Note.js'
 import {useState, useEffect} from 'react'
+import axios from 'axios'
 
 export default function App () {
 
@@ -9,17 +10,17 @@ export default function App () {
 
   useEffect(() => {
     console.log("useEffect")
-    setLoading(true);
+    setLoading(true); //Para poner por ejemplo un dibujo de cargando mientras ejecuta el fetch
 
     setTimeout(() => { 
       console.log("Time out finalizado")
-      fetch("https://jsonplaceholder.typicode.com/posts")
-        .then(response => response.json())
-        .then(json => {
-        //console.log(json)
-        console.log("seteando las notas de la API")
-        setNotes(json)
-        setLoading(false)
+      axios
+        .get("https://jsonplaceholder.typicode.com/posts")
+        .then(response => {
+          const {data} = response
+          console.log("seteando las notas de la API")
+          setNotes(data)
+          setLoading(false) //Para avisar al usuario que la pagina se cargo completamente
         })
     }, 2000)
   }, [])
@@ -49,7 +50,7 @@ export default function App () {
   return (
     <div> 
       <h1>Notes</h1>
-      {loading ? "Cargando..." : ""}
+      {loading ? "Cargando..." : ""}  
       <ol>
         {notes.map(note => <Note key={note.id} {...note} />)}
       </ol>
