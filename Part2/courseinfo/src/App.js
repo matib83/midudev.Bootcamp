@@ -12,17 +12,12 @@ export default function App () {
     console.log("useEffect")
     setLoading(true); //Para poner por ejemplo un dibujo de cargando mientras ejecuta el fetch
 
-    setTimeout(() => { 
-      console.log("Time out finalizado")
-      axios
-        .get("https://jsonplaceholder.typicode.com/posts")
-        .then(response => {
-          const {data} = response
-          console.log("seteando las notas de la API")
-          setNotes(data)
-          setLoading(false) //Para avisar al usuario que la pagina se cargo completamente
-        })
-    }, 2000)
+    axios.get("https://jsonplaceholder.typicode.com/posts").then(response => {
+        const {data} = response
+        console.log("seteando las notas de la API")
+        setNotes(data)
+        setLoading(false) //Para avisar al usuario que la pagina se cargo completamente
+      })
   }, [])
 
   const handleChange = (event) => {
