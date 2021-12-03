@@ -1,10 +1,10 @@
 
 
-export const Persons = ({filteredData}) => {
+export const Persons = ({name,number}) => {
 
     return (
         <div>
-            {filteredData.map(person => <>{person.name} {person.number}<br/></>)}
+            <>{name} {number}<br/></>
         </div>
     )
 }

@@ -75,7 +75,7 @@ const App = () => {
                   handleChangeNumber={handleChangeNumber} newName={newName} newNumber={newNumber} 
       /> 
       <h3>Numbers</h3>
-      <Persons filteredData={filteredData}/>
+      {filteredData.map(person => <Persons key={person.name} {...person} />)}
     </div>
   )
 }
