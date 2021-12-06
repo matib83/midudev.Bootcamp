@@ -1,19 +1,25 @@
 import {Persons} from './Persons.js'
 import {Filter} from './Filter.js'
 import {PersonForm} from './PersonForm.js'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
+import axios from 'axios'
 import './App.css';
 
 const App = () => {
-  const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number: '123456'},
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ]) 
+  const [persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ newFilter, setNewFilter ] = useState('')
+
+  useEffect(() => {
+    console.log("useEffect")
+
+    axios.get("http://localhost:3001/persons").then(response => {
+        const {data} = response
+        console.log("seteando las notas de la API")
+        setPersons(data)
+      })
+  }, [])
 
   const handleChangeName = (event) => {
     setNewName (event.target.value)
@@ -44,7 +50,8 @@ const App = () => {
       console.log('Agendar persona')
       const personToAddState = {
         name: newName,
-        number: newNumber
+        number: newNumber,
+        id: persons.length+1
       }
       console.log(personToAddState)
       setPersons(persons.concat(personToAddState))
@@ -59,6 +66,7 @@ const App = () => {
                                         return (
                                           Object.keys(person)   // segundo, busco cada campo de person (name, number)
                                                 .some(key => {  // Tercero, verifico si alguno de los campos se valida
+                                                  if ( typeof person[key] !== 'string' ) return false // Evito los campos que no sean String
                                                   return (
                                                     person[key].toLowerCase().includes(lowercasedFilter) //se valida si contienen algo de lowercasedFilter
                                                   )}
