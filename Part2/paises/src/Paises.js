@@ -3,7 +3,7 @@ export const Paises = ({name}) => {
     
     return (
         <div>
-            <>{name}<br/></>
+            {name}<br/>
         </div>
     )
 }
