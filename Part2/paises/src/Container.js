@@ -8,7 +8,7 @@ const handleClickSelected = (e,setSelected,filteredData) => {
     setSelected(index)
   }
 
-export const Container = ({filteredData, selected, setSelected}) => {
+export const Container = ({filteredData, selected, setSelected, clima}) => {
     console.log(filteredData)
     if (filteredData.length > 10) 
         return (
@@ -32,11 +32,11 @@ export const Container = ({filteredData, selected, setSelected}) => {
     {
         if (selected >= 0) 
             return (
-                <Detail {...filteredData[selected]} />
+                <Detail {...filteredData[selected]} clima={clima} />
             )
 
         return (
-            <Detail {...filteredData[0]} />
+            <Detail {...filteredData[0]} clima={clima}/>
         )
     }
 
