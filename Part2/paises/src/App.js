@@ -5,14 +5,10 @@ import axios from 'axios'
 
 function App() {
   const [paises, setPaises] = useState([])
-  const [clima, setClima] = useState([])
   const [ newFilter, setNewFilter ] = useState('')
-  const [ selected, setSelected ] = useState(-1)
-
 
   useEffect(() => {
     console.log("useEffect paises")
-
     axios.get("https://restcountries.com/v3.1/all").then(response => {
         const {data} = response
         console.log("Leyendo paises de la API")
@@ -20,27 +16,11 @@ function App() {
       })
   }, [])
 
-  useEffect(() => {
-    const params = {
-      q: 'London',
-      appid: '4d67ea42d48801cf5b227107f0720b32'
-    }
-    console.log("useEffect clima")   
-    axios.get('https://api.openweathermap.org/data/2.5/weather?', {params}).then(response => {
-      const {data} = response
-      console.log("Leyendo clima de la API")
-      setClima(data)
-    })  
-  }, [])
-
   const handleChangeFilter = (event) => {
     setNewFilter (event.target.value)
-    setSelected(-1)
   }
 
-  const lowercasedFilter = newFilter.toLowerCase()
-  const filteredData = paises.filter(pais => pais.name.common.toLowerCase().includes(lowercasedFilter))
-
+  const filteredData = paises.filter(pais => pais.name.common.toLowerCase().includes(newFilter.toLowerCase()))
   // sort by name
   filteredData.sort(function(a, b) {
     const nameA = a.name.common.toUpperCase(); // ignore upper and lowercase
@@ -63,7 +43,7 @@ function App() {
       </h1>
       <Filter handleChangeFilter={handleChangeFilter} newFilter={newFilter}/>
       {paises.length>1 ? 
-      <Container filteredData={filteredData} selected={selected} setSelected={setSelected} clima={clima} />   
+      <Container filteredData={filteredData} />   
       :
       <>Cargando datos...</>
       } 
