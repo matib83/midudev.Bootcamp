@@ -26,15 +26,20 @@ export default function App () {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log('crear nota')
     const noteToAddToState = {
-      id: notes.length + 1,
       title: newNote,
-      body: newNote
+      body: newNote,
+      userId: 1
     }
+    axios.post("https://jsonplaceholder.typicode.com/posts", noteToAddToState)
+    .then(response =>{
+      const {data} = response
+      setNotes(prevNotes => prevNotes.concat(data))
+    })
+    console.log('crear nota')
     console.log(noteToAddToState)
-
-    setNotes(notes.concat(noteToAddToState))  //Forma facil
+    // Las lineas de codigo de abajo ya no las uso, pq envio datos al servidor
+    // setNotes(notes.concat(noteToAddToState))  //Forma facil
     //setNewNote([...notes, noteToAddToState]) Forma dificil pero mas potente
     setNewNote("")
   }
