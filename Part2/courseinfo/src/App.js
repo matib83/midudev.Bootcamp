@@ -1,6 +1,8 @@
 import {Note} from './Note.js'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
+import { getAllNotes } from './services/notes/getAllNotes.js'
+import { createNote } from './services/notes/createNote.js'
 
 export default function App () {
 
@@ -10,14 +12,11 @@ export default function App () {
 
   useEffect(() => {
     console.log("useEffect")
-    setLoading(true); //Para poner por ejemplo un dibujo de cargando mientras ejecuta el fetch
-
-    axios.get("https://jsonplaceholder.typicode.com/posts").then(response => {
-        const {data} = response
-        console.log("seteando las notas de la API")
-        setNotes(data)
-        setLoading(false) //Para avisar al usuario que la pagina se cargo completamente
-      })
+    setLoading(true)              //Para poner por ejemplo un dibujo de cargando mientras ejecuta el fetch
+    getAllNotes().then((notes) => {
+      setNotes(notes)
+      setLoading(false)
+    })
   }, [])
 
   const handleChange = (event) => {
@@ -31,11 +30,11 @@ export default function App () {
       body: newNote,
       userId: 1
     }
-    axios.post("https://jsonplaceholder.typicode.com/posts", noteToAddToState)
-    .then(response =>{
-      const {data} = response
-      setNotes(prevNotes => prevNotes.concat(data))
-    })
+
+    createNote(noteToAddToState).then(newNote => {
+        setNotes(prevNotes => prevNotes.concat(newNote))
+      })
+     
     console.log('crear nota')
     console.log(noteToAddToState)
     // Las lineas de codigo de abajo ya no las uso, pq envio datos al servidor
