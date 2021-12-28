@@ -1,6 +1,5 @@
 import {Note} from './Note.js'
 import {useState, useEffect} from 'react'
-import axios from 'axios'
 import { getAllNotes } from './services/notes/getAllNotes.js'
 import { createNote } from './services/notes/createNote.js'
 
@@ -9,6 +8,7 @@ export default function App () {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState("")
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     console.log("useEffect")
@@ -31,9 +31,15 @@ export default function App () {
       userId: 1
     }
 
-    createNote(noteToAddToState).then(newNote => {
+    setError('')              //siempre limpiar los estados antes de ejecutarlos
+    createNote(noteToAddToState)
+      .then(newNote => {
         setNotes(prevNotes => prevNotes.concat(newNote))
       })
+      .catch((error => {
+        console.error(error)
+        setError('la API ha fallado')
+      }))
      
     console.log('crear nota')
     console.log(noteToAddToState)
@@ -57,6 +63,8 @@ export default function App () {
         <input type='text' onChange={handleChange} value={newNote}/>
         <button>Creat nota</button>
       </form>
+
+      {error ? <span style={{ color: "red" }}>{error}</span> : ""}
     </div> 
   );
 }
