@@ -4,6 +4,7 @@ import {PersonForm} from './PersonForm.js'
 import React, { useState,useEffect } from 'react'
 import axios from 'axios'
 import './App.css';
+import { createPerson } from './services/persons/createPerson.js'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -51,10 +52,13 @@ const App = () => {
       const personToAddState = {
         name: newName,
         number: newNumber,
-        id: persons.length+1
+        Userid: 1
       }
       console.log(personToAddState)
-      setPersons(persons.concat(personToAddState))
+      createPerson(personToAddState)
+        .then(newPerson=> {
+          setPersons(prevPersons => prevPersons.concat(newPerson))
+        })
       setNewName ("")
       setNewNumber ("")
       setNewFilter ("")
@@ -73,6 +77,8 @@ const App = () => {
                                                 )
                                         ) 
                                       })
+  
+  console.log({filteredData})
 
   return (
     <div>
@@ -83,7 +89,7 @@ const App = () => {
                   handleChangeNumber={handleChangeNumber} newName={newName} newNumber={newNumber} 
       /> 
       <h3>Numbers</h3>
-      {filteredData.map(person => <Persons key={person.name} {...person} />)}
+      {<Persons filteredData={filteredData} />}
     </div>
   )
 }
