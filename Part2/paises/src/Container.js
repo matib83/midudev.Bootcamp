@@ -40,7 +40,7 @@ export const Container = ({filteredData}) => {
                         {console.log(pais.name.common)}
                         {pais.name.common}{" "}
                         <button name={pais.name.common} onClick={
-                            (e)=>handleClickclicked(e,setClicked,filteredData)}> {"Show"} 
+                            (e)=>handleClickclicked(e)}> {"Show"} 
                         </button>                        
                     </div>
             )
