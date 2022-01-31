@@ -5,6 +5,7 @@ import React, { useState,useEffect } from 'react'
 import axios from 'axios'
 import './App.css';
 import { createPerson } from './services/persons/createPerson.js'
+import { changePhone } from './services/persons/changePhone.js'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -42,17 +43,31 @@ const App = () => {
 
     if (persons.find(element => element.name === newName)!==undefined)
     {
-      console.log(`${newName} is already added to phonebook`)
-      alert(`${newName} is already added to phonebook`)
+      const result = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+      const index = persons.findIndex( element => element.name === newName);
+      if (result){ 
+        changePhone(persons[index].id,newName,newNumber)
+        .then(response => {
+            setPersons(persons.map(person => person.name === newName ? response : person))
+          })
+          console.log(`Teléfono de ${newName} cambiado`)
+      }
+      else{
+          console.log("PROCESO CANCELADO: El telefono no ha cambiado")
+      }
     }
     else
     {
+      if (newName === "" || newNumber === "") 
+      {
+        alert("Nombre y teléfono deben contener al menos 1 caracter")
+        return
+      } 
       console.log("Persona no hallada en la agenda");  
       console.log('Agendar persona')
       const personToAddState = {
         name: newName,
         number: newNumber,
-        Userid: 1
       }
       console.log(personToAddState)
       createPerson(personToAddState)
@@ -89,7 +104,7 @@ const App = () => {
                   handleChangeNumber={handleChangeNumber} newName={newName} newNumber={newNumber} 
       /> 
       <h3>Numbers</h3>
-      {<Persons filteredData={filteredData} setPersons={setPersons} />}
+      {<Persons filteredData={filteredData} persons={persons} setPersons={setPersons} />}
     </div>
   )
 }

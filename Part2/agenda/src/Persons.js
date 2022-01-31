@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { deletePerson } from './services/persons/deletePerson.js'
 
-export const Persons = ({filteredData, setPersons}) => {
+export const Persons = ({filteredData, persons, setPersons}) => {
     //const [ clicked, setClicked ] = useState(-1)
     const [error, setError] = useState('')
     console.log(filteredData.length)
@@ -18,7 +18,7 @@ export const Persons = ({filteredData, setPersons}) => {
             setError('') 
             deletePerson(filteredData[index].id)
             .then(response => {
-                setPersons(filteredData.filter(person => person.id !== filteredData[index].id))
+                setPersons(persons.filter(person => person.id !== filteredData[index].id))
               })
               .catch((error => {
                 console.error(error)
