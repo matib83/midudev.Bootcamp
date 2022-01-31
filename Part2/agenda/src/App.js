@@ -19,6 +19,20 @@ const Notification = ({ message }) => {
   )
 }
 
+const Footer = () => {
+  const footerStyle = {
+    color: 'green',
+    fontStyle: 'italic',
+    fontSize: 16
+  }
+  return (
+    <div style={footerStyle}>
+      <br />
+      <em>Note app, Department of Computer Science, University of Helsinki 2020</em>
+    </div>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
@@ -122,6 +136,7 @@ const App = () => {
       /> 
       <h3>Numbers</h3>
       {<Persons filteredData={filteredData} persons={persons} setPersons={setPersons} />}
+      <Footer />
     </div>
   )
 }
