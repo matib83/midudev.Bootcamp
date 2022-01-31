@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { deletePerson } from './services/persons/deletePerson.js'
 
-export const Persons = ({filteredData}) => {
+export const Persons = ({filteredData, setPersons}) => {
     //const [ clicked, setClicked ] = useState(-1)
+    const [error, setError] = useState('')
     console.log(filteredData.length)
 
     const handleClickclicked = (e) => {
@@ -10,11 +11,19 @@ export const Persons = ({filteredData}) => {
         console.log(e.target.name)
         const result = window.confirm(`Delete ${e.target.name}?`)
         const index = filteredData.findIndex( (element) => element.name === e.target.name);
-        console.log(`Borrar el ID: ${index} de la base de datos?`)
+        console.log(`Borrar el ID: ${filteredData[index].id} de la base de datos?`)
         console.log(`Resultado eleccion: ${result}`)
         
         if (result){ 
-            deletePerson(index)
+            setError('') 
+            deletePerson(filteredData[index].id)
+            .then(response => {
+                setPersons(filteredData.filter(person => person.id !== filteredData[index].id))
+              })
+              .catch((error => {
+                console.error(error)
+                setError('la API ha fallado')
+              }))
             console.log("Persona eliminada")
         }
         else{
