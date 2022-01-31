@@ -7,11 +7,24 @@ import './App.css';
 import { createPerson } from './services/persons/createPerson.js'
 import { changePhone } from './services/persons/changePhone.js'
 
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className="error">
+       {message}
+    </div>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ newFilter, setNewFilter ] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     console.log("useEffect")
@@ -60,7 +73,10 @@ const App = () => {
     {
       if (newName === "" || newNumber === "") 
       {
-        alert("Nombre y teléfono deben contener al menos 1 caracter")
+        setErrorMessage( "Nombre y teléfono deben contener al menos 1 caracter" )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
         return
       } 
       console.log("Persona no hallada en la agenda");  
@@ -100,6 +116,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter handleChangeFilter={handleChangeFilter} newFilter={newFilter}/>
       <h3>Add a new</h3>
+      <Notification message={errorMessage} />
       <PersonForm handleSubmit={handleSubmit} handleChangeName={handleChangeName} 
                   handleChangeNumber={handleChangeNumber} newName={newName} newNumber={newNumber} 
       /> 
