@@ -20,10 +20,10 @@ export const Persons = ({filteredData, persons, setPersons}) => {
             .then(response => {
                 setPersons(persons.filter(person => person.id !== filteredData[index].id))
               })
-              .catch((error => {
-                console.error(error)
-                setError('la API ha fallado')
-              }))
+            .catch((error => {
+            console.error({error})
+            setError('la API ha fallado')
+            }))
             console.log("Persona eliminada")
         }
         else{

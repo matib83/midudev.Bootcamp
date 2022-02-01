@@ -5,18 +5,27 @@ import React, { useState,useEffect } from 'react'
 import axios from 'axios'
 import './App.css';
 import { createPerson } from './services/persons/createPerson.js'
-import { changePhone } from './services/persons/changePhone.js'
+import { ChangePhone } from './services/persons/ChangePhone.js'
 
-const Notification = ({ message }) => {
+const ERRORmESSAGE = "Nombre y teléfono deben contener al menos 1 caracter"
+
+const Notification = ({message, messageId}) => {
   if (message === null) {
     return null
   }
-
-  return (
+  
+  if (messageId === 0)
+    return (
     <div className="error">
        {message}
     </div>
-  )
+    )
+  else
+    return (
+      <div className="newUser">
+        {message}
+      </div>
+    )
 }
 
 const Footer = () => {
@@ -28,7 +37,7 @@ const Footer = () => {
   return (
     <div style={footerStyle}>
       <br />
-      <em>Note app, Department of Computer Science, University of Helsinki 2020</em>
+      <em>Pie de pagina, utilizado para poner al final</em>
     </div>
   )
 }
@@ -39,6 +48,8 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ newFilter, setNewFilter ] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
+  const [newUserMensagge, setNewUserMenssage] = useState(null)
+  const [errorNotFound, setErrorNotFound] = useState(null)
 
   useEffect(() => {
     console.log("useEffect")
@@ -73,11 +84,23 @@ const App = () => {
       const result = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
       const index = persons.findIndex( element => element.name === newName);
       if (result){ 
-        changePhone(persons[index].id,newName,newNumber)
+        ChangePhone(persons[index].id,newName,newNumber)
         .then(response => {
-            setPersons(persons.map(person => person.name === newName ? response : person))
-          })
-          console.log(`Teléfono de ${newName} cambiado`)
+            console.log(response.response.status)
+            if (response.response.status === 404)
+            {
+              setErrorNotFound(`${newName} has already been removed from server`)
+              setTimeout(() => {
+                setErrorNotFound(null)
+              }, 5000)
+              setPersons(persons.map(person => person.name === newName ? response : person))
+            }
+            else
+            {
+              setPersons(persons.map(person => person.name === newName ? response : person))
+              console.log(`Teléfono de ${newName} cambiado`)
+            }
+        })
       }
       else{
           console.log("PROCESO CANCELADO: El telefono no ha cambiado")
@@ -87,7 +110,7 @@ const App = () => {
     {
       if (newName === "" || newNumber === "") 
       {
-        setErrorMessage( "Nombre y teléfono deben contener al menos 1 caracter" )
+        setErrorMessage( ERRORmESSAGE )
         setTimeout(() => {
           setErrorMessage(null)
         }, 5000)
@@ -107,6 +130,11 @@ const App = () => {
       setNewName ("")
       setNewNumber ("")
       setNewFilter ("")
+      setNewUserMenssage(`Added ${newName}`)
+      setTimeout(() => {
+        setNewUserMenssage(null)
+      }, 5000)
+      return
     }
   }
 
@@ -130,7 +158,9 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter handleChangeFilter={handleChangeFilter} newFilter={newFilter}/>
       <h3>Add a new</h3>
-      <Notification message={errorMessage} />
+      <Notification message={errorMessage} messageId={0} />
+      <Notification message={newUserMensagge} messageId={1} />
+      <Notification message={errorNotFound} messageId={0} />
       <PersonForm handleSubmit={handleSubmit} handleChangeName={handleChangeName} 
                   handleChangeNumber={handleChangeNumber} newName={newName} newNumber={newNumber} 
       /> 
