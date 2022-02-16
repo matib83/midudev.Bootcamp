@@ -39,7 +39,12 @@ app.get('/api/notes/:id',(request, response) => {  //Así puedo recuperar parám
     console.log({id})
     const note = notes.find(note => note.id === id)
     console.log({note})
-    response.json(note)                            
+    if (note) {
+        response.json(note)
+    }else {
+        response.status(404).end()
+    }
+                               
 })
 
 const PORT = 3001                                   //puerto por donde escucha mi servidor
