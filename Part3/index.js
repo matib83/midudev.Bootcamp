@@ -6,4 +6,4 @@ const app = http.createServer((request, response) => {      //Callback, funcion 
 
 const PORT = 3001                                           //puerto por donde escucha mi servidor
 app.listen(PORT)
-console.log(`Server running on port ${PORT}`)
+console.log(`Server running on port ${PORT}`)               //Consola del servidor (no del navegador)
