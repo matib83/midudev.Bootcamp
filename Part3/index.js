@@ -35,7 +35,7 @@ app.get('/api/notes',(request, response) => {       //Cuando nuestra aplicacion 
 })
 
 app.get('/api/notes/:id',(request, response) => {  //Así puedo recuperar parámetros dinámicos del path o URL
-    const id = request.params.id
+    const id = Number(request.params.id)                    // Lo que recibe es STRING y debo convertirlo a entero
     console.log({id})
     const note = notes.find(note => note.id === id)
     console.log({note})
