@@ -34,6 +34,14 @@ app.get('/api/notes',(request, response) => {       //Cuando nuestra aplicacion 
     response.json(notes)                            //Me resuelve el content type, el status, etc
 })
 
+app.get('/api/notes/:id',(request, response) => {  //Así puedo recuperar parámetros dinámicos del path o URL
+    const id = request.params.id
+    console.log({id})
+    const note = notes.find(note => note.id === id)
+    console.log({note})
+    response.json(note)                            
+})
+
 const PORT = 3001                                   //puerto por donde escucha mi servidor
 app.listen(PORT,() => {
     console.log(`Server running on port ${PORT}`)   //Como el servidor en Express se inicia de manera asincrona, 
