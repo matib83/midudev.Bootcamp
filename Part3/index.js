@@ -1,5 +1,8 @@
 const express = require('express')    //Importar el modulo http utilizando Common.JS
 const app = express()
+
+app.use(express.json())
+
 let notes = [
     {
       id: 1,
@@ -53,6 +56,32 @@ app.delete('/api/notes/:id',(request, response) => {
     const id = Number(request.params.id)
     notes = notes.filter(note => note.id !== id)
     response.status(204).end()
+})
+
+app.post('/api/notes',(request, response) => {
+  const note = request.body
+  
+  if(!note || !note.content) {
+    return response.status(400).json({
+      error: 'note.content is missing'
+    })
+
+  }
+
+  const ids = notes.map(note => note.id)  //creo un array de objetos solo de los ID
+  const maxId = Math.max(...ids)        // Busco el maximo ID
+
+  const newNote = {
+    id: maxId + 1,
+    content: note.content,                //valor que viaja en el body del POST
+    important: typeof note.important !== 'undefined' ? note.important : false,
+    date: new Date().toISOString()
+  }
+
+  //notes = [...notes, newNote]
+  notes = notes.concat(newNote)
+
+  response.status(201).json(newNote)
 })
 
 const PORT = 3001                                   //puerto por donde escucha mi servidor
