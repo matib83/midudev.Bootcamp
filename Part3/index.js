@@ -43,8 +43,16 @@ app.get('/api/notes/:id',(request, response) => {  //Así puedo recuperar parám
         response.json(note)
     }else {
         response.status(404).end()
-    }
-                               
+    }                         
+})
+
+// Recordar que por la barra de direcciones solo se pueden hacer GET para probar, 
+// en el caso que necesite realizar otras acciones debo utilizar las herramientas
+// como POSTMAN o INSOMNIA
+app.delete('/api/notes/:id',(request, response) => {
+    const id = Number(request.params.id)
+    notes = notes.filter(note => note.id !== id)
+    response.status(204).end()
 })
 
 const PORT = 3001                                   //puerto por donde escucha mi servidor
