@@ -3,6 +3,14 @@ const app = express()
 
 app.use(express.json())
 
+//Ejemplo de lo que es un MIDDLEWARE
+app.use((request, response, next) => {
+    console.log(request.method)
+    console.log(request.path)
+    console.log(request.body)
+    console.log('-----')
+})
+
 let notes = [
     {
         id: 1, 
@@ -81,6 +89,11 @@ app.post('/api/notes',(request, response) => {
     notes = notes.concat(newNote)
 
     response.status(201).json(newNote)
+})
+
+//Ejemplo de lo que es un MIDDLEWARE
+app.use(() => {
+    console.log('He entrado aqui')
 })
 
 const PORT = 3001                                   //puerto por donde escucha mi servidor
