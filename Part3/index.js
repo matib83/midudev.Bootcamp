@@ -9,6 +9,7 @@ app.use((request, response, next) => {
     console.log(request.path)
     console.log(request.body)
     console.log('-----')
+    next()      //linea para que el servidor luego de mostrarte los logs anteriores, continue ejecutando codigo
 })
 
 let notes = [
@@ -92,8 +93,12 @@ app.post('/api/notes',(request, response) => {
 })
 
 //Ejemplo de lo que es un MIDDLEWARE
-app.use(() => {
+app.use((request,response) => {
     console.log('He entrado aqui')
+    console.log(request.path)       //Puedo saBER QUE PATH ME ESTAN PIDIENDO ACCEDER
+    response.status(404).json({
+        error: 'Not found'
+    })
 })
 
 const PORT = 3001                                   //puerto por donde escucha mi servidor
