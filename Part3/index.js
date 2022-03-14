@@ -1,16 +1,18 @@
 const express = require('express')    //Importar el modulo http utilizando Common.JS
 const app = express()
 
-app.use(express.json())
-
-//Ejemplo de lo que es un MIDDLEWARE
-app.use((request, response, next) => {
+//Ejemplo de lo que es un MIDDLEWARE como función
+const logger = ((request, response, next) => {
     console.log(request.method)
     console.log(request.path)
     console.log(request.body)
     console.log('-----')
     next()      //linea para que el servidor luego de mostrarte los logs anteriores, continue ejecutando codigo
 })
+
+app.use(express.json())
+
+app.use(logger)
 
 let notes = [
     {
