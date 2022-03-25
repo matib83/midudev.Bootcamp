@@ -86,7 +86,7 @@ app.post('/api/notes',(request, response) => {
     response.status(201).json(newNote)
 })
 
-//Ejemplo de lo que es un MIDDLEWARE
+//Ejemplo de lo que es un MIDDLEWARE (entra cuando no se ejecuta ninguna ruta de arriba)
 app.use((request,response) => {
     console.log('He entrado aqui')
     console.log(request.path)       //Puedo saBER QUE PATH ME ESTAN PIDIENDO ACCEDER
