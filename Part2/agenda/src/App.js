@@ -14,6 +14,7 @@ import './App.css'
 import { createPerson } from './services/persons/createPerson.js'
 import { changePhone } from './services/persons/changePhone.js'
 import { getAllPersons } from './services/getAllPersons.js'
+const baseUrl = 'http://localhost:3001/api/persons'
 
 const ERRORmESSAGE = "Nombre y teléfono deben contener al menos 1 caracter"
 
@@ -62,7 +63,7 @@ const App = () => {
 
   useEffect(() => {
     console.log("useEffect")
-    getAllPersons()
+    getAllPersons(baseUrl)
       .then(persons => {
         setPersons(persons)
         setNewWaiting(1)
@@ -93,7 +94,7 @@ const App = () => {
     if (person !== undefined) {
       const result = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
       if (result) {
-        changePhone(person, newNumber)
+        changePhone(person, newNumber, baseUrl)
           .then(response => {
             console.log({ response })
             //Actualizo mi variable de estado PERSONS modificando el numero de telefono de la persona agendada
@@ -128,7 +129,7 @@ const App = () => {
         number: newNumber,
       }
       console.log(personToAddState)
-      createPerson(personToAddState)
+      createPerson(personToAddState, baseUrl)
         .then(newPerson => {
           setPersons(prevPersons => prevPersons.concat(newPerson))
         })

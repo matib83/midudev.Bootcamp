@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-export const getAllPersons = () => {
-    return axios.get("http://localhost:3001/persons")
+export const getAllPersons = (baseUrl) => {
+    return axios.get(baseUrl)
         .then(response => {
             const { data } = response
             console.log("seteando las notas de la API")
