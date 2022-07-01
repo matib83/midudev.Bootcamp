@@ -1,20 +1,16 @@
 import axios from 'axios'
 
-export const changePhone = (userId, name, number) => {
+export const changePhone = ({ id, name, number }, newNumber) => {
 
-  console.log(`Usuario recibido para cambiar número: ${userId} `)
+  console.log(`Usuario a cambiar número: ${name} id: ${id} numero viejo: ${number} `)
+  console.log(`Numero nuevo: ${newNumber} `)
+  number = newNumber  //Para mantener el mismo atributo en la BD, sinó, cambia
   return axios
-    .put(`http://localhost:3001/persons/${userId}`, { name, number })
+    .put(`http://localhost:3001/persons/${id}`, { name, number })
     .then((response) => {
+      console.log(`${name} ha cambiado su numero`)
       const { data } = response
-      console.log(`${userId} ha cambiado su numero`)
-      console.log({ data })
+
       return data
     })
-    .catch((error => {
-      console.error("Usuario no encontrado")
-      console.log({ error })
-      //const {data} = error
-      return error
-    }))
 }

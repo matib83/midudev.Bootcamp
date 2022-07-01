@@ -84,27 +84,29 @@ const App = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
     console.log("Aca debo revisar si hay que agregar a la persona")
-    console.log(persons)
-    console.log(newName)
+    console.log({ persons })
+    console.log({ newName })
+    console.log({ newNumber })
 
-    if (persons.find(element => element.name === newName) !== undefined) {
+    const person = persons.find(p => p.name === newName)
+    console.log({ person })
+    if (person !== undefined) {
       const result = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
-      const index = persons.findIndex(element => element.name === newName);
       if (result) {
-        changePhone(persons[index].id, newName, newNumber)
+        changePhone(person, newNumber)
           .then(response => {
             console.log({ response })
-            if (response.response.status === 404) {
-              setErrorNotFound(`${newName} has already been removed from server`)
-              setTimeout(() => {
-                setErrorNotFound(null)
-              }, 5000)
-              setPersons(persons.map(person => person.name === newName ? response : person))
-            }
-            else {
-              setPersons(persons.map(person => person.name === newName ? response : person))
-              console.log(`Teléfono de ${newName} cambiado`)
-            }
+            //Actualizo mi variable de estado PERSONS modificando el numero de telefono de la persona agendada
+            setPersons(persons.map(p => p.name === newName ? response : p))
+            console.log(`Teléfono de ${newName} cambiado`)
+          })
+          .catch(error => {
+            setPersons(persons.filter(p => p.name !== newName))
+            setErrorNotFound(`${newName} has already been removed from server`)
+            setTimeout(() => {
+              setErrorNotFound(null)
+            }, 5000)
+            //Actualizo mi variable de estado PERSONS quitando la persona no hallada en la BD
           })
       }
       else {
@@ -150,11 +152,11 @@ const App = () => {
           return (
             person[key].toLowerCase().includes(lowercasedFilter) //se valida si contienen algo de lowercasedFilter
           )
-        }
-        )
+        })
     )
   })
 
+  console.log({ newFilter })
   console.log({ filteredData })
   console.log({ persons })
 
