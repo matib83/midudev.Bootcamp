@@ -33,7 +33,7 @@ export const Persons = ({ filteredData, persons, setPersons, waiting }) => {
         }
     }
 
-    if (waiting === 0) {       // Si aun no lei la base de datos anuncio la carga...
+    if (waiting === true) {       // Si aun no lei la base de datos anuncio la carga...
         return (
             <div>
                 <>"Cargando agenda..."</>
@@ -41,7 +41,7 @@ export const Persons = ({ filteredData, persons, setPersons, waiting }) => {
         )
     }
 
-    if (waiting === 1 && persons.length === 0) {       // Si termino de leer los datos de la BD y no hay nada aviso
+    if (waiting === false && (persons.length === 0 || typeof persons === "undefined")) {       // Si termino de leer los datos de la BD y no hay nada aviso
         return (
             <div>
                 <>"Agenda vacía!"</>
