@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 //import { del as deletePerson } from "./services/persons"
 import { deletePerson } from './services/persons/deletePerson.js'
 
-export const Persons = ({ filteredData, persons, setPersons, waiting }) => {
+export const Persons = ({ filteredData, persons, setPersons, waiting, baseUrl }) => {
     //const [ clicked, setClicked ] = useState(-1)
     const [error, setError] = useState('')
     console.log(filteredData.length)
@@ -18,7 +18,7 @@ export const Persons = ({ filteredData, persons, setPersons, waiting }) => {
 
         if (result) {
             setError('')
-            deletePerson(filteredData[index].id)
+            deletePerson(filteredData[index].id, baseUrl)
                 .then(response => {
                     setPersons(persons.filter(person => person.id !== filteredData[index].id))
                 })

@@ -174,7 +174,7 @@ const App = () => {
         handleChangeNumber={handleChangeNumber} newName={newName} newNumber={newNumber}
       />
       <h3>Numbers</h3>
-      {<Persons filteredData={filteredData} persons={persons} setPersons={setPersons} waiting={waiting} />}
+      {<Persons filteredData={filteredData} persons={persons} setPersons={setPersons} waiting={waiting} baseUrl={baseUrl} />}
       <Footer />
     </div>
   )
