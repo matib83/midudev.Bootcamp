@@ -14,8 +14,8 @@ import './App.css'
 import { createPerson } from './services/persons/createPerson.js'
 import { changePhone } from './services/persons/changePhone.js'
 import { getAllPersons } from './services/getAllPersons.js'
-//const baseUrl = 'http://localhost:3001/api/persons'
-const baseUrl = 'https://polite-bunnyhug-86367.herokuapp.com/api/persons'
+const baseUrl = 'http://localhost:3001/api/persons'
+// const baseUrl = 'https://polite-bunnyhug-86367.herokuapp.com/api/persons'
 const ERRORmESSAGE = "Nombre y teléfono deben contener al menos 1 caracter"
 
 const Notification = ({ message, messageId }) => {
